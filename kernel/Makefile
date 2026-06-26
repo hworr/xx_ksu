@@ -1,15 +1,22 @@
+# Wrapper for DDK build system - invoke kernel build via -C
+KDIR := $(KDIR)
+MDIR := $(realpath $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+
+all modules:
+	$(MAKE) -C $(KDIR) M=$(MDIR) modules
+
+clean:
+	$(MAKE) -C $(KDIR) M=$(MDIR) clean
+
+$(info -- KDIR: $(KDIR))
+$(info -- MDIR: $(MDIR))
+
 # NOTE: unity build. single unit.
 
 obj-$(CONFIG_KSU) := ksu.o
 
 CFLAGS_ksu.o += -I$(srctree)/security/selinux -I$(srctree)/security/selinux/include
 CFLAGS_ksu.o += -I$(objtree)/security/selinux
-
-KDIR := $(KDIR)
-MDIR := $(realpath $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
-
-$(info -- KDIR: $(KDIR))
-$(info -- MDIR: $(MDIR))
 
 # compliant to last upstream kernel change as of 5517191 (32522-2)
 CFLAGS_ksu.o += -DKSU_VERSION=35522
