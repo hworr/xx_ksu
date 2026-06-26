@@ -226,6 +226,6 @@ static int __init kernelsu_init(void)
 
 device_initcall(kernelsu_init);
 
-// MODULE_LICENSE("GPL");
-// MODULE_AUTHOR("weishu");
-// MODULE_DESCRIPTION("Android KernelSU");
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("weishu");
+MODULE_DESCRIPTION("Android KernelSU");
