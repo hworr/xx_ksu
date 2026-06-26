@@ -48,7 +48,7 @@ $(info -- KernelSU/compat: security_add_hooks v2 found!)
 CFLAGS_ksu.o += -DKSU_COMPAT_SECURITY_ADD_HOOKS_V2
 endif
 
-ifeq ($(shell grep -q "^struct security_operations selinux_ops" $(srctree)/security/selinux/hooks.c; echo $$?),0)
+ifeq ($(shell grep -q "^struct security_operations selinux_ops" $(srctree)/security/selinux/hooks.c 2>/dev/null; echo $$?),0)
 $(info -- KernelSU/compat: exported selinux_ops found!)
 CFLAGS_ksu.o += -DKSU_HAS_EXPORTED_SELINUX_OPS
 endif
@@ -59,29 +59,29 @@ $(info -- KernelSU/compat: security_hook_list - hlist_node found!)
 CFLAGS_ksu.o += -DKSU_COMPAT_SECURITY_DELETE_HOOKS_HLIST
 endif
 
-ifeq ($(shell grep -q " current_sid(void)" $(srctree)/security/selinux/include/objsec.h; echo $$?),0)
+ifeq ($(shell grep -q " current_sid(void)" $(srctree)/security/selinux/include/objsec.h 2>/dev/null; echo $$?),0)
 CFLAGS_ksu.o += -DKSU_COMPAT_HAS_CURRENT_SID
 endif
 
-ifeq ($(shell grep -q "struct selinux_state " $(srctree)/security/selinux/include/security.h; echo $$?),0)
+ifeq ($(shell grep -q "struct selinux_state " $(srctree)/security/selinux/include/security.h 2>/dev/null; echo $$?),0)
 CFLAGS_ksu.o += -DKSU_COMPAT_HAS_SELINUX_STATE
 endif
 
-ifeq ($(shell grep -q "struct type_datum \*\*type_val_to_struct;" $(srctree)/security/selinux/ss/policydb.h; echo $$?),0)
+ifeq ($(shell grep -q "struct type_datum \*\*type_val_to_struct;" $(srctree)/security/selinux/ss/policydb.h 2>/dev/null; echo $$?),0)
 CFLAGS_ksu.o += -DKSU_TYPE_VAL_TO_STRUCT
 endif
 
 # half-assed-backport from 5.1
-ifeq ($(shell grep -q "struct type_datum \*\*type_val_to_struct_array;" $(srctree)/security/selinux/ss/policydb.h; echo $$?),0)
+ifeq ($(shell grep -q "struct type_datum \*\*type_val_to_struct_array;" $(srctree)/security/selinux/ss/policydb.h 2>/dev/null; echo $$?),0)
 CFLAGS_ksu.o += -DKSU_TYPE_VAL_TO_STRUCT_ARRAY
 endif
 
-ifeq ($(shell grep -q "^DEFINE_RWLOCK(policy_rwlock);" $(srctree)/security/selinux/ss/services.c; echo $$?),0)
+ifeq ($(shell grep -q "^DEFINE_RWLOCK(policy_rwlock);" $(srctree)/security/selinux/ss/services.c 2>/dev/null; echo $$?),0)
 $(info -- KernelSU/compat: exported policy_rwlock found!)
 CFLAGS_ksu.o += -DKSU_COMPAT_HAS_EXPORTED_POLICY_RWLOCK
 endif
 
-ifeq ($(shell grep -q "cpus_ptr;" $(srctree)/include/linux/sched.h; echo $$?),0)
+ifeq ($(shell grep -q "cpus_ptr;" $(srctree)/include/linux/sched.h 2>/dev/null; echo $$?),0)
 $(info -- KernelSU/compat: backported cpus_ptr found!)
 CFLAGS_ksu.o += -DKSU_COMPAT_HAS_BACKPORTED_CPUS_PTR
 endif
